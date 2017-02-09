@@ -29,15 +29,23 @@ chrome.runtime.onConnect.addListener((port) => {
 store.setFetcher(({title, season, episode}, callback) => {
     logo.startTask();
     chrome.storage.sync.get('languages', ({languages}) => {
-        addic7edApi.search(title, season, episode, languages).then((subtitles) => {
-            let languages = [];
-            subtitles.forEach((subtitle) => {
-                languages.push(subtitle.langId);
-            });
-            let url = subtitles[0] ? 'http://www.addic7ed.com'+subtitles[0].link : '';
-            callback(languages, url);
+        if (languages) {
+            if (languages.length > 0){
+                addic7edApi.search(title, season, episode, languages).then((subtitles) => {
+                    let languages = [];
+                    subtitles.forEach((subtitle) => {
+                        languages.push(subtitle.langId);
+                    });
+                    let url = subtitles[0] ? 'http://www.addic7ed.com'+subtitles[0].link : '';
+                    callback(languages, url);
+                    logo.endTask();
+                });
+            } else {
+                logo.endTask();
+            }
+        } else {
             logo.endTask();
-        });
+        }
     });
 });
 

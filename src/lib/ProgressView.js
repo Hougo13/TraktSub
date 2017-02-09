@@ -12,7 +12,7 @@ export default class {
             let container = document.createElement("div");
             container.className = "langs_container";
             container.style = "position: absolute; top: 0; margin-top: 6px;";
-            container.innerHTML = '<img src="'+chrome.extension.getURL("icons/fre.png")+'" style="width: 40px;" id="lang_fre" hidden><img src="'+chrome.extension.getURL("icons/eng.png")+'" style="width: 40px;" id="lang_eng" hidden>';
+            container.innerHTML = '<img src="'+chrome.extension.getURL("icons/fre.png")+'" style="width: 40px;" class="flag" id="lang_fre" hidden><img src="'+chrome.extension.getURL("icons/eng.png")+'" style="width: 40px;" class="flag" id="lang_eng" hidden>';
 
             element.querySelector(".fanart").append(container);
         });
@@ -61,6 +61,11 @@ export default class {
             e.preventDefault();
             window.open(redirectURL);
         };
+
+        let flags = item.element.getElementsByClassName("flag");
+        for (let flag of flags) {
+            flag.hidden = true;
+        }
 
         languages.forEach((lang) => {
 

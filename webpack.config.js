@@ -1,4 +1,5 @@
 let path = require('path');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -8,7 +9,8 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [
@@ -18,6 +20,14 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new CopyWebpackPlugin([
+            {from: './logo', to: './logo'},
+            {from: './icons', to: './icons'},
+            {from: './popup.html'},
+            {from: './manifest.json'}
+        ])
+    ],
     node: {
         console: true,
         fs: 'empty',
