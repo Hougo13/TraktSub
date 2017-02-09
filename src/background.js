@@ -18,7 +18,7 @@ chrome.runtime.onConnect.addListener((port) => {
 
     socket.on('watch', ({shows}) => {
         collection.set(shows);
-        console.log(store);
+        //console.log(store);
     });
 
     socket.on('disconnect', () => {

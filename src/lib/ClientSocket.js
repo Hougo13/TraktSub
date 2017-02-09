@@ -23,7 +23,6 @@ export default class extends EventEmitter {
     }
 
     watch(shows) {
-        console.log(shows);
         this.send('watch', shows);
     }
 

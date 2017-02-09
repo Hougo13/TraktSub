@@ -7,7 +7,7 @@
     "scripts": ["dist/background.js"]
   },
   "web_accessible_resources": ["icons/fre.png", "icons/eng.png"],
-  "permissions": ["*://*.trakt.tv/*","*://*.addic7ed.com/*", "tabs", "storage", "webNavigation", "activeTab"],
+  "permissions": ["*://*.trakt.tv/*","*://*.addic7ed.com/*", "tabs", "storage"],
   "content_scripts": [ 
     {
       "matches": ["https://trakt.tv/*"],

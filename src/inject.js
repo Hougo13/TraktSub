@@ -12,11 +12,11 @@ getAll();
 
 socket.on('update', ({show, languages, url}) => {
     if (view) view.update(show, languages, url);
-    console.log(show, languages);
+    //console.log(show, languages);
 });
 
 socket.on('urlChange', ({url}) => {
-    console.log(url);
+    //console.log(url);
     view = getView(url);
     getAll();
 });
@@ -34,7 +34,6 @@ function getView(url) {
 }
 
 function getAll() {
-    console.log(view);
     if (view) {
         view.getList((list) => {
             socket.watch(list);
