@@ -1,26 +1,46 @@
-var addic7edApi = require('addic7ed-api');
+import Logo from './lib/LogoHandler';
+import Socket from './lib/ServerSocket';
+import Store from './lib/Store';
 
-chrome.runtime.onConnect.addListener(function(port) {
-  port.onMessage.addListener(function({type, request}) {
-    if(type == "fetchsub"){
-      addic7edApi.search(request.show, request.season, request.episode, request.languages).then(function (subtitlesList) {
-        // console.log(subtitlesList);
-        port.postMessage({request, result: subtitlesList});
-      });
-    }else if(type == "setlogo"){
-      chrome.browserAction.setIcon({path: "logo/"+request+".png"});
-    }
-  });
+let addic7edApi = require('addic7ed-api');
+let logo = new Logo();
+let store = new Store();
+
+chrome.runtime.onConnect.addListener((port) => {
+    let socket = new Socket(port);
+
+    let collection = store.newCollection();
+
+    collection.setUpdater((item) => {
+        console.log(item);
+        socket.update(item);
+    });
+
+    socket.on('watch', ({shows}) => {
+        collection.set(shows);
+        console.log(store);
+    });
+
+    socket.on('disconnect', () => {
+        collection.destroy();
+    });
 });
 
-chrome.tabs.onActivated.addListener(function (activeInfo){
-  // console.log(activeInfo);
-  chrome.tabs.get(activeInfo.tabId, function (tab){
-    // console.log(tab);
-    if(tab.url.includes("trakt.tv")){
-      chrome.tabs.reload(activeInfo.tabId);
-    }else{
-      chrome.browserAction.setIcon({path: "logo/inactive.png"});
-    }
-  });
+store.setFetcher(({title, season, episode}, callback) => {
+    logo.startTask();
+    chrome.storage.sync.get('languages', ({languages}) => {
+        addic7edApi.search(title, season, episode, languages).then((subtitles) => {
+            let languages = [];
+            subtitles.forEach((subtitle) => {
+                languages.push(subtitle.langId);
+            });
+            let url = subtitles[0] ? 'http://www.addic7ed.com'+subtitles[0].link : '';
+            callback(languages, url);
+            logo.endTask();
+        });
+    });
 });
+
+setInterval(() => {
+    store.fetchAll();
+},  15 * 60 * 1000);

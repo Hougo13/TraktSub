@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body{
+            width: 160px;
+        }
+        .languages{
+            list-style: none;
+            padding: 0px;
+        }
+        .languages img{
+            width: 40px;
+        }
+        .languages li{
+            width: 70px;
+            height: 40px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <h3>Languages to watch :</h3>
+    <form id="form">
+        <ul class="languages">
+            <li><input type="checkbox" name="languages" value="fre"><img src="icons/fre.png" alt=""></li>
+            <li><input type="checkbox" name="languages" value="eng"><img src="icons/eng.png" alt=""></li>
+        </ul>
+        <button type="submit" id="save">Save</button>
+    </form>
+    <script src="dist/popup.js"></script>
+</body>
+</html>

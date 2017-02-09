@@ -1,4 +1,5 @@
 node_modules/
 asserts/
-main.js
-background.js
+dist/
+.idea/
+yarn.lock
