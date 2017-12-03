@@ -1,6 +1,6 @@
-import ShowCompare from './ShowCompare';
+import { ShowCompare } from './';
 
-export default class {
+export class Store {
     constructor(){
         this.id_counter = 0;
         this.data = [];

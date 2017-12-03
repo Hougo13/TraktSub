@@ -1,11 +1,11 @@
-import ShowCompare from './ShowCompare';
+import { ShowCompare } from '../Util';
 
-export default class {
+export class ProgressView {
     constructor() {
 
         this.items = [];
 
-        this.elements = document.querySelectorAll('#ondeck-wrapper .grid-item');
+        this.elements = document.querySelectorAll('#progress-wrapper .row.posters.fanarts.twenty-four-cols.grid-item.no-overlays');
 
         this.elements.forEach((element) =>{
 
@@ -14,8 +14,7 @@ export default class {
             container.style = "position: absolute; top: 0; margin-top: 6px;";
             container.innerHTML = '<img src="'+chrome.extension.getURL("icons/fre.png")+'" style="width: 40px;" class="flag" id="lang_fre" hidden><img src="'+chrome.extension.getURL("icons/eng.png")+'" style="width: 40px;" class="flag" id="lang_eng" hidden>';
 
-            element.querySelector(".poster").append(container);
-
+            element.querySelector(".fanart").append(container);
         });
 
         this.getAll();
@@ -26,10 +25,10 @@ export default class {
         this.items = [];
 
         for (let element of this.elements){
-            let num = element.getElementsByClassName('main-title-sxe')[0].innerHTML.split("x");
+            let num = element.querySelector('[itemprop="episode"] .main-title-sxe').innerHTML.split("x");
             let season = num[0];
             let episode = num[1];
-            let title = element.querySelector('[itemprop="partOfSeries"] [itemprop="name"]').getAttribute('content');
+            let title = element.querySelector('.show-title a').innerHTML;
 
             this.items.push({
                 show: {title, season, episode},
@@ -37,6 +36,7 @@ export default class {
             });
 
         }
+
     }
 
     getList(callback){

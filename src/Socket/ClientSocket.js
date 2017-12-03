@@ -1,7 +1,7 @@
 const EventEmitter = require('events');
-import ShowCompare from './ShowCompare';
+import { ShowCompare } from '../Util';
 
-export default class extends EventEmitter {
+export class ClientSocket extends EventEmitter {
     constructor(){
 
         super();

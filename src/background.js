@@ -1,13 +1,12 @@
-import Logo from './lib/LogoHandler';
-import Socket from './lib/ServerSocket';
-import Store from './lib/Store';
+import { LogoHandler, Store } from './Util';
+import { ServerSocket } from './Socket';
 
 let addic7edApi = require('addic7ed-api');
-let logo = new Logo();
+let logo = new LogoHandler();
 let store = new Store();
 
 chrome.runtime.onConnect.addListener((port) => {
-    let socket = new Socket(port);
+    let socket = new ServerSocket(port);
 
     let collection = store.newCollection();
 

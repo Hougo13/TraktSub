@@ -1,8 +1,7 @@
-import Socket from './lib/ClientSocket';
-import Dashboard from './lib/DashboardView';
-import Progress from './lib/ProgressView';
+import { ClientSocket } from './Socket';
+import { DashboardView, ProgressView } from './View';
 
-let socket = new Socket();
+let socket = new ClientSocket();
 
 let init_url = window.location.href;
 
@@ -25,9 +24,9 @@ socket.on('urlChange', ({url}) => {
 function getView(url) {
     switch (true){
         case /https:\/\/trakt\.tv\/dashboard/.test(url):
-            return new Dashboard();
+            return new DashboardView();
         case /https:\/\/trakt\.tv\/users\/\w+\/progress/.test(url):
-            return new Progress();
+            return new ProgressView();
         default :
             return false
     }

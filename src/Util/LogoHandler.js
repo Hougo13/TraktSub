@@ -1,4 +1,4 @@
-export default class {
+export class LogoHandler {
     constructor() {
         this.state = 'active';
         this.tasks = 0;
